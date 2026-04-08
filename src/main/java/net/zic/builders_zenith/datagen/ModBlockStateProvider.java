@@ -25,7 +25,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 
         simpleBlockWithItem(ModBlocks.SHAPE_MAKER, "full");
-        simpleBlockWithItem(ModBlocks.COLOR_MIXER, "full");
+        //simpleBlockWithItem(ModBlocks.COLOR_MIXER, "full");
 
 
         // Wood vertical slabs
