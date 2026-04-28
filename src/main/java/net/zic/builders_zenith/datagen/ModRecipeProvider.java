@@ -18,6 +18,7 @@ import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.zic.builders_zenith.BuildersZenith;
 import net.zic.builders_zenith.blocks.ModBlocks;
 import net.zic.builders_zenith.datagen.builders.ColorMixerRecipeBuilder;
+import net.zic.builders_zenith.items.ModItems;
 import net.zic.builders_zenith.recipe.CarpenterRecipes;
 import net.zic.builders_zenith.util.ModTags;
 
@@ -36,6 +37,44 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         generateCarpenterRecipes(recipeOutput);
         generateColorMixerRecipes(recipeOutput);
 
+
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.BLUEPRINT.get())
+                .pattern("PBP")
+                .pattern("BSB")
+                .pattern("PBP")
+                .define('S', Items.STRING)
+                .define('P', Items.PAPER)
+                .define('B', Items.BLUE_DYE)
+                .unlockedBy("has_blue_dye", has(Items.BLUE_DYE)).save(recipeOutput, "builders_zenith:shaped/blueprint");
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.TAPE_MEASURE.get())
+                .pattern("   ")
+                .pattern("II ")
+                .pattern("IIW")
+                .define('I', Items.IRON_INGOT)
+                .define('W', ItemTags.WOOL_CARPETS)
+                .unlockedBy("has_wool_carpet", has(ItemTags.WOOL_CARPETS)).save(recipeOutput, "builders_zenith:shaped/tape_measure");
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.TROWEL.get())
+                .pattern(" II")
+                .pattern(" II")
+                .pattern("S  ")
+                .define('I', Items.IRON_INGOT)
+                .define('S', Items.STICK)
+                .unlockedBy("has_stick", has(Items.STICK)).save(recipeOutput, "builders_zenith:shaped/trowel");
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.HANDHELD_FILLER.get())
+                .pattern("III")
+                .pattern(" II")
+                .pattern("S I")
+                .define('I', Items.IRON_INGOT)
+                .define('S', Items.STICK)
+                .unlockedBy("has_stick", has(Items.STICK)).save(recipeOutput, "builders_zenith:shaped/handheld_filler");
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.WHITE_BLOCK_POUCH.get())
+                .pattern("WWW")
+                .pattern("WCW")
+                .pattern("WWW")
+                .define('W', Items.WHITE_WOOL)
+                .define('C', Items.CHEST)
+                .unlockedBy("has_chest", has(Items.CHEST)).save(recipeOutput, "builders_zenith:shaped/white_block_pouch");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CARPENTER.get())
                 .pattern("SIS")

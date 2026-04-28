@@ -201,7 +201,7 @@ public class ColorMixerRecipeBuilder {
 
         // FIXED: Use DYED_BRICK_STAIRS instead of DYED_BRICKS
         ItemStack placeholderResult = new ItemStack(
-                ModBlocks.DYED_BRICK_STAIRS.get(DyedBrickType.WHITE_WHITE).get(), 4);
+                ModBlocks.DYED_BRICK_STAIRS.get(DyedBrickType.WHITE_WHITE).get(), 8);
 
         ColorMixerRecipe recipe = new ColorMixerRecipe(
                 "dyed_brick_stairs_vanilla",
@@ -227,7 +227,7 @@ public class ColorMixerRecipeBuilder {
 
         // FIXED: Use DYED_BRICK_STAIRS instead of DYED_BRICKS
         ItemStack placeholderResult = new ItemStack(
-                ModBlocks.DYED_BRICK_STAIRS.get(DyedBrickType.WHITE_WHITE).get(), 4);
+                ModBlocks.DYED_BRICK_STAIRS.get(DyedBrickType.WHITE_WHITE).get(), 8);
 
         ColorMixerRecipe recipe = new ColorMixerRecipe(
                 "dyed_brick_stairs_recolor",
@@ -255,7 +255,7 @@ public class ColorMixerRecipeBuilder {
 
         // FIXED: Use DYED_BRICK_WALLS instead of DYED_BRICKS
         ItemStack placeholderResult = new ItemStack(
-                ModBlocks.DYED_BRICK_WALLS.get(DyedBrickType.WHITE_WHITE).get(), 6);
+                ModBlocks.DYED_BRICK_WALLS.get(DyedBrickType.WHITE_WHITE).get(), 8);
 
         ColorMixerRecipe recipe = new ColorMixerRecipe(
                 "dyed_brick_walls_vanilla",
@@ -281,7 +281,7 @@ public class ColorMixerRecipeBuilder {
 
         // FIXED: Use DYED_BRICK_WALLS instead of DYED_BRICKS
         ItemStack placeholderResult = new ItemStack(
-                ModBlocks.DYED_BRICK_WALLS.get(DyedBrickType.WHITE_WHITE).get(), 6);
+                ModBlocks.DYED_BRICK_WALLS.get(DyedBrickType.WHITE_WHITE).get(), 8);
 
         ColorMixerRecipe recipe = new ColorMixerRecipe(
                 "dyed_brick_walls_recolor",

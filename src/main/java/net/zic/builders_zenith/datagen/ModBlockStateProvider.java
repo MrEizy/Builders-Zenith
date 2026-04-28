@@ -154,7 +154,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 // Mortar overlay element - ADDED DOWN FACE
                 .element()
                 .from(0, 0, 0).to(16, 8, 16)
-                .face(Direction.DOWN).texture("#mortar_overlay").tintindex(1).cullface(Direction.DOWN).end()  // ADD THIS
+                .face(Direction.DOWN).texture("#mortar_overlay").tintindex(1).cullface(Direction.DOWN).end()
                 .face(Direction.UP).texture("#mortar_overlay").tintindex(1).end()
                 .face(Direction.NORTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.NORTH).uvs(0, 8, 16, 16).end()
                 .face(Direction.SOUTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.SOUTH).uvs(0, 8, 16, 16).end()
@@ -185,7 +185,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .element()
                 .from(0, 8, 0).to(16, 16, 16)
                 .face(Direction.DOWN).texture("#mortar_overlay").tintindex(1).end()
-                .face(Direction.UP).texture("#mortar_overlay").tintindex(1).cullface(Direction.UP).end()  // ADD THIS
+                .face(Direction.UP).texture("#mortar_overlay").tintindex(1).cullface(Direction.UP).end()
                 .face(Direction.NORTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.NORTH).uvs(0, 0, 16, 8).end()
                 .face(Direction.SOUTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.SOUTH).uvs(0, 0, 16, 8).end()
                 .face(Direction.WEST).texture("#mortar_overlay").tintindex(1).cullface(Direction.WEST).uvs(0, 0, 16, 8).end()
@@ -202,59 +202,51 @@ public class ModBlockStateProvider extends BlockStateProvider {
     private void registerDyedBrickStairs(DeferredBlock<?> stairBlock, DeferredBlock<?> baseBlock) {
         String name = stairBlock.getId().getPath();
 
-            // REGULAR STAIRS - Proper UV mapping matching your template
-            var stairs = models().getBuilder(name)
-                    .parent(models().getExistingFile(mcLoc("block/stairs")))
-                    .renderType("cutout")
-                    .texture("particle", modLoc("block/brick_base"))
-                    .texture("brick_base", modLoc("block/brick_base"))
-                    .texture("mortar_overlay", modLoc("block/mortar_overlay"))
-                    .texture("bottom", modLoc("block/brick_base"))
-                    .texture("top", modLoc("block/brick_base"))
-                    .texture("side", modLoc("block/brick_base"))
-                    // Bottom step (full 16x16x8)
-                    .element().from(0, 0, 0).to(16, 8, 16)
-                    .face(Direction.DOWN).texture("#brick_base").tintindex(0).cullface(Direction.DOWN).uvs(0, 0, 16, 16).end()
-                    .face(Direction.UP).texture("#brick_base").tintindex(0).uvs(0, 0, 16, 16).end()
-                    .face(Direction.NORTH).texture("#brick_base").tintindex(0).cullface(Direction.NORTH).uvs(0, 8, 16, 16).end()
-                    .face(Direction.SOUTH).texture("#brick_base").tintindex(0).cullface(Direction.SOUTH).uvs(0, 8, 16, 16).end()
-                    .face(Direction.WEST).texture("#brick_base").tintindex(0).cullface(Direction.WEST).uvs(0, 8, 16, 16).end()
-                    .face(Direction.EAST).texture("#brick_base").tintindex(0).cullface(Direction.EAST).uvs(0, 8, 16, 16).end()
-                    .end()
-                    // Bottom step mortar
-                    .element().from(0, 0, 0).to(16, 8, 16)
-                    .face(Direction.UP).texture("#mortar_overlay").tintindex(1).uvs(0, 0, 16, 16).end()
-                    .face(Direction.NORTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.NORTH).uvs(0, 8, 16, 16).end()
-                    .face(Direction.SOUTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.SOUTH).uvs(0, 8, 16, 16).end()
-                    .face(Direction.WEST).texture("#mortar_overlay").tintindex(1).cullface(Direction.WEST).uvs(0, 8, 16, 16).end()
-                    .face(Direction.EAST).texture("#mortar_overlay").tintindex(1).cullface(Direction.EAST).uvs(0, 8, 16, 16).end()
-                    .end()
-                    // Top step - RIGHT side
-                    .element().from(8, 8, 0).to(16, 16, 16)
-                    .face(Direction.UP).texture("#brick_base").tintindex(0).cullface(Direction.UP).uvs(8, 0, 16, 16).end()
-                    .face(Direction.DOWN).texture("#brick_base").tintindex(0).uvs(8, 0, 16, 16).end()
-                    .face(Direction.NORTH).texture("#brick_base").tintindex(0).uvs(8, 0, 16, 8).end()
-                    .face(Direction.SOUTH).texture("#brick_base").tintindex(0).cullface(Direction.SOUTH).uvs(8, 0, 16, 8).end()
-                    .face(Direction.WEST).texture("#brick_base").tintindex(0).uvs(0, 0, 16, 8).end()
-                    .face(Direction.EAST).texture("#brick_base").tintindex(0).cullface(Direction.EAST).uvs(0, 0, 16, 8).end()
-                    .end()
-                    // Bottom step mortar
-                    .element().from(0, 0, 0).to(16, 8, 16)
-                    .face(Direction.UP).texture("#mortar_overlay").tintindex(1).uvs(0, 0, 16, 16).end()
-                    .face(Direction.DOWN).texture("#mortar_overlay").tintindex(1).cullface(Direction.DOWN).end()  // ADD THIS
-                    .face(Direction.NORTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.NORTH).uvs(0, 8, 16, 16).end()
-                    .face(Direction.SOUTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.SOUTH).uvs(0, 8, 16, 16).end()
-                    .face(Direction.WEST).texture("#mortar_overlay").tintindex(1).cullface(Direction.WEST).uvs(0, 8, 16, 16).end()
-                    .face(Direction.EAST).texture("#mortar_overlay").tintindex(1).cullface(Direction.EAST).uvs(0, 8, 16, 16).end()
-                    .end()
-                    // Mortar layer - same UVs
-                    .element().from(8, 8, 0).to(16, 16, 16)
-                    .face(Direction.UP).texture("#mortar_overlay").tintindex(1).cullface(Direction.UP).uvs(8, 0, 16, 16).end()
-                    .face(Direction.NORTH).texture("#mortar_overlay").tintindex(1).uvs(8, 0, 16, 8).end()
-                    .face(Direction.SOUTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.SOUTH).uvs(8, 0, 16, 8).end()
-                    .face(Direction.WEST).texture("#mortar_overlay").tintindex(1).uvs(0, 0, 16, 8).end()
-                    .face(Direction.EAST).texture("#mortar_overlay").tintindex(1).cullface(Direction.EAST).uvs(0, 0, 16, 8).end()
-                    .end();
+        // REGULAR STAIRS - Proper UV mapping matching your template
+        var stairs = models().getBuilder(name)
+                .parent(models().getExistingFile(mcLoc("block/stairs")))
+                .renderType("cutout")
+                .texture("particle", modLoc("block/brick_base"))
+                .texture("brick_base", modLoc("block/brick_base"))
+                .texture("mortar_overlay", modLoc("block/mortar_overlay"))
+                .texture("bottom", modLoc("block/brick_base"))
+                .texture("top", modLoc("block/brick_base"))
+                .texture("side", modLoc("block/brick_base"))
+                // Bottom step (full 16x16x8)
+                .element().from(0, 0, 0).to(16, 8, 16)
+                .face(Direction.DOWN).texture("#brick_base").tintindex(0).cullface(Direction.DOWN).uvs(0, 0, 16, 16).end()
+                .face(Direction.UP).texture("#brick_base").tintindex(0).uvs(0, 0, 16, 16).end()
+                .face(Direction.NORTH).texture("#brick_base").tintindex(0).cullface(Direction.NORTH).uvs(0, 8, 16, 16).end()
+                .face(Direction.SOUTH).texture("#brick_base").tintindex(0).cullface(Direction.SOUTH).uvs(0, 8, 16, 16).end()
+                .face(Direction.WEST).texture("#brick_base").tintindex(0).cullface(Direction.WEST).uvs(0, 8, 16, 16).end()
+                .face(Direction.EAST).texture("#brick_base").tintindex(0).cullface(Direction.EAST).uvs(0, 8, 16, 16).end()
+                .end()
+                // Bottom step mortar
+                .element().from(0, 0, 0).to(16, 8, 16)
+                .face(Direction.UP).texture("#mortar_overlay").tintindex(1).uvs(0, 0, 16, 16).end()
+                .face(Direction.DOWN).texture("#mortar_overlay").tintindex(1).cullface(Direction.DOWN).end()
+                .face(Direction.NORTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.NORTH).uvs(0, 8, 16, 16).end()
+                .face(Direction.SOUTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.SOUTH).uvs(0, 8, 16, 16).end()
+                .face(Direction.WEST).texture("#mortar_overlay").tintindex(1).cullface(Direction.WEST).uvs(0, 8, 16, 16).end()
+                .face(Direction.EAST).texture("#mortar_overlay").tintindex(1).cullface(Direction.EAST).uvs(0, 8, 16, 16).end()
+                .end()
+                // Top step - RIGHT side
+                .element().from(8, 8, 0).to(16, 16, 16)
+                .face(Direction.UP).texture("#brick_base").tintindex(0).cullface(Direction.UP).uvs(8, 0, 16, 16).end()
+                .face(Direction.DOWN).texture("#brick_base").tintindex(0).uvs(8, 0, 16, 16).end()
+                .face(Direction.NORTH).texture("#brick_base").tintindex(0).uvs(8, 0, 16, 8).end()
+                .face(Direction.SOUTH).texture("#brick_base").tintindex(0).cullface(Direction.SOUTH).uvs(8, 0, 16, 8).end()
+                .face(Direction.WEST).texture("#brick_base").tintindex(0).uvs(0, 0, 16, 8).end()
+                .face(Direction.EAST).texture("#brick_base").tintindex(0).cullface(Direction.EAST).uvs(0, 0, 16, 8).end()
+                .end()
+                // Mortar layer - same UVs
+                .element().from(8, 8, 0).to(16, 16, 16)
+                .face(Direction.UP).texture("#mortar_overlay").tintindex(1).cullface(Direction.UP).uvs(8, 0, 16, 16).end()
+                .face(Direction.NORTH).texture("#mortar_overlay").tintindex(1).uvs(8, 0, 16, 8).end()
+                .face(Direction.SOUTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.SOUTH).uvs(8, 0, 16, 8).end()
+                .face(Direction.WEST).texture("#mortar_overlay").tintindex(1).uvs(0, 0, 16, 8).end()
+                .face(Direction.EAST).texture("#mortar_overlay").tintindex(1).cullface(Direction.EAST).uvs(0, 0, 16, 8).end()
+                .end();
 
         // INNER STAIRS
         var stairsInner = models().getBuilder(name + "_inner")
@@ -278,6 +270,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 // Bottom step mortar
                 .element().from(0, 0, 0).to(16, 8, 16)
                 .face(Direction.UP).texture("#mortar_overlay").tintindex(1).end()
+                .face(Direction.DOWN).texture("#mortar_overlay").tintindex(1).cullface(Direction.DOWN).end()
                 .face(Direction.NORTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.NORTH).uvs(0, 8, 16, 16).end()
                 .face(Direction.SOUTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.SOUTH).uvs(0, 8, 16, 16).end()
                 .face(Direction.WEST).texture("#mortar_overlay").tintindex(1).cullface(Direction.WEST).uvs(0, 8, 16, 16).end()
@@ -340,6 +333,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 // Bottom step mortar
                 .element().from(0, 0, 0).to(16, 8, 16)
                 .face(Direction.UP).texture("#mortar_overlay").tintindex(1).end()
+                .face(Direction.DOWN).texture("#mortar_overlay").tintindex(1).cullface(Direction.DOWN).end()
                 .face(Direction.NORTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.NORTH).uvs(0, 8, 16, 16).end()
                 .face(Direction.SOUTH).texture("#mortar_overlay").tintindex(1).cullface(Direction.SOUTH).uvs(0, 8, 16, 16).end()
                 .face(Direction.WEST).texture("#mortar_overlay").tintindex(1).cullface(Direction.WEST).uvs(0, 8, 16, 16).end()

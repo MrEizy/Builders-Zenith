@@ -89,7 +89,7 @@ public class ColorMixerEMIPlugin implements EmiPlugin {
             boolean isStairs = group.contains("stair");
             boolean isWall = group.contains("wall");
 
-            int outputCount = isStairs ? 4 : (isWall ? 6 : 8);
+            int outputCount = isStairs ? 8 : (isWall ? 8 : 8);
 
             java.util.function.Function<DyedBrickType, EmiStack> mapper;
 
@@ -139,7 +139,7 @@ public class ColorMixerEMIPlugin implements EmiPlugin {
             java.util.function.Function<DyedBrickType, EmiStack> stackMapper;
             EmiStack vanillaInput;
             int baseCount = 8;
-            int outputCount = isStairs ? 4 : (isWall ? 6 : 8);
+            int outputCount = isStairs ? 8 : (isWall ? 8 : 8);
 
             if (isSlab) {
                 stackMapper = type -> EmiStack.of(ModBlocks.DYED_BRICK_SLABS.get(type).get());
