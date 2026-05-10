@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Builder's Zenith — Maven Repository</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f1115;
+            --bg-secondary: #16191f;
+            --bg-tertiary: #1c2028;
+            --bg-hover: #252a33;
+            --accent: #f0a000;
+            --accent-hover: #ffb820;
+            --text-primary: #e8eaed;
+            --text-secondary: #9aa0a6;
+            --text-muted: #5f6368;
+            --border: #2a2f38;
+            --success: #34a853;
+            --code-bg: #0d0f12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), #d08000);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #000;
+            box-shadow: 0 4px 12px rgba(240, 160, 0, 0.2);
+        }
+
+        .brand-text h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-text span {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .meta-badges {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-badge {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meta-badge strong {
+            color: var(--text-primary);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h2 {
+                font-size: 2rem;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+
+        .copy-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .copy-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .code-keyword { color: #c792ea; }
+        .code-string { color: #c3e88d; }
+        .code-comment { color: #546e7a; font-style: italic; }
+        .code-tag { color: #f07178; }
+        .code-attr { color: #ffcb6b; }
+
+        /* Repository Browser */
+        .browser {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .browser-header {
+            background: var(--bg-tertiary);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+
+        .browser-dot:nth-child(1) { background: #ff5f56; }
+        .browser-dot:nth-child(2) { background: #ffbd2e; }
+        .browser-dot:nth-child(3) { background: #27c93f; }
+
+        .browser-path {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-left: 0.5rem;
+        }
+
+        .browser-body {
+            padding: 0;
+        }
+
+        .file-list {
+            list-style: none;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .file-item:hover {
+            background: var(--bg-hover);
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-icon {
+            width: 20px;
+            text-align: center;
+            margin-right: 1rem;
+            color: var(--accent);
+        }
+
+        .file-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            flex: 1;
+        }
+
+        .file-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Info Section */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .info-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .info-card p, .info-card li {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .info-card ul {
+            padding-left: 1.25rem;
+        }
+
+        .info-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card code {
+            background: var(--bg-tertiary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="brand">
+                <div class="brand-icon">BZ</div>
+                <div class="brand-text">
+                    <h1>Builder's Zenith</h1>
+                    <span>Maven Repository</span>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#repository">Repository</a></li>
+                <li><a href="#dependency">Dependency</a></li>
+                <li><a href="#artifacts">Artifacts</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="badge">Live Maven Repository</div>
+        <h2>Builder's Zenith</h2>
+        <p>A Minecraft 1.21.1 NeoForge mod. Add this repository to your build script to depend on Builder's Zenith.</p>
+        <div class="meta-badges">
+            <div class="meta-badge">MC <strong>1.21.1</strong></div>
+            <div class="meta-badge">Loader <strong>NeoForge</strong></div>
+            <div class="meta-badge">Latest <strong>1.0.0</strong></div>
+        </div>
+    </section>
+
+    <main class="container">
+        
+        <div class="grid" id="dependency">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">build.gradle</span>
+                    <button class="copy-btn" onclick="copy(this, 'gradle')">Copy</button>
+                </div>
+                <div class="card-body">
+<pre><span class="code-comment">// Add to repositories block</span>
+<span class="code-keyword">maven</span> {
+    url <span class="code-string">"https://yourusername.github.io/builders-zenith/maven"</span>
+}
+
+<span class="code-comment">// Add to dependencies block</span>
+<span class="code-keyword">implementation</span> <span class="code-string">"com.yourname.builderszenith:builders-zenith-1.21.1:1.0.0"</span></pre>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">pom.xml</span>
+                    <button class="copy-btn" onclick="copy(this, 'maven')">Copy</button>
+                </div>
+                <div class="card-body">
+<pre><span class="code-tag">&lt;repository&gt;</span>
+    <span class="code-tag">&lt;id&gt;</span>builders-zenith<span class="code-tag">&lt;/id&gt;</span>
+    <span class="code-tag">&lt;url&gt;</span>https://yourusername.github.io/builders-zenith/maven<span class="code-tag">&lt;/url&gt;</span>
+<span class="code-tag">&lt;/repository&gt;</span>
+
+<span class="code-tag">&lt;dependency&gt;</span>
+    <span class="code-tag">&lt;groupId&gt;</span>com.yourname.builderszenith<span class="code-tag">&lt;/groupId&gt;</span>
+    <span class="code-tag">&lt;artifactId&gt;</span>builders-zenith-1.21.1<span class="code-tag">&lt;/artifactId&gt;</span>
+    <span class="code-tag">&lt;version&gt;</span>1.0.0<span class="code-tag">&lt;/version&gt;</span>
+<span class="code-tag">&lt;/dependency&gt;</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="browser" id="repository">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <span class="browser-path">maven / com / yourname / builderszenith / builders-zenith-1.21.1 / 1.0.0 /</span>
+            </div>
+            <div class="browser-body">
+                <ul class="file-list" id="artifacts">
+                    <li>
+                        <a href="#" class="file-item">
+                            <span class="file-icon">📁</span>
+                            <span class="file-name">../</span>
+                            <span class="file-meta">Parent Directory</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="builders-zenith-1.21.1-1.0.0.pom" class="file-item">
+                            <span class="file-icon">📄</span>
+                            <span class="file-name">builders-zenith-1.21.1-1.0.0.pom</span>
+                            <span class="file-meta">2.4 KB</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="builders-zenith-1.21.1-1.0.0.jar" class="file-item">
+                            <span class="file-icon">📦</span>
+                            <span class="file-name">builders-zenith-1.21.1-1.0.0.jar</span>
+                            <span class="file-meta">1.2 MB</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="builders-zenith-1.21.1-1.0.0-sources.jar" class="file-item">
+                            <span class="file-icon">📦</span>
+                            <span class="file-name">builders-zenith-1.21.1-1.0.0-sources.jar</span>
+                            <span class="file-meta">856 KB</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="builders-zenith-1.21.1-1.0.0-javadoc.jar" class="file-item">
+                            <span class="file-icon">📦</span>
+                            <span class="file-name">builders-zenith-1.21.1-1.0.0-javadoc.jar</span>
+                            <span class="file-meta">1.5 MB</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="maven-metadata.xml" class="file-item">
+                            <span class="file-icon">📝</span>
+                            <span class="file-name">maven-metadata.xml</span>
+                            <span class="file-meta">412 B</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>📦 Repository Setup</h3>
+                <p>To host this on <strong>GitHub Pages</strong>:</p>
+                <ul style="margin-top: 0.5rem;">
+                    <li>Create a repo named <code>builders-zenith</code></li>
+                    <li>Enable Pages in repo settings</li>
+                    <li>Place this <code>index.html</code> at root</li>
+                    <li>Upload JARs to <code>/maven/...</code> path</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>🔧 Gradle Configuration</h3>
+                <p>Make sure your <code>build.gradle</code> includes:</p>
+                <ul style="margin-top: 0.5rem;">
+                    <li>Repository URL pointing to your Pages site</li>
+                    <li>Correct <code>groupId</code> and <code>artifactId</code></li>
+                    <li>NeoForge Gradle plugin configured</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>🏷️ Versioning</h3>
+                <p>Follow Maven conventions for your artifact paths:</p>
+                <ul style="margin-top: 0.5rem;">
+                    <li><code>com/yourname/modid/VERSION/</code></li>
+                    <li>Always include <code>maven-metadata.xml</code></li>
+                    <li>Sign artifacts with <code>.asc</code> for security</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>⚡ Quick Links</h3>
+                <ul style="margin-top: 0.5rem;">
+                    <li><a href="#" style="color: var(--accent);">CurseForge Project</a></li>
+                    <li><a href="#" style="color: var(--accent);">Modrinth Page</a></li>
+                    <li><a href="#" style="color: var(--accent);">GitHub Source</a></li>
+                    <li><a href="#" style="color: var(--accent);">Issue Tracker</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>Builder's Zenith © 2026 — Hosted on GitHub Pages — <a href="#">Report Issue</a></p>
+    </footer>
+
+    <script>
+        const snippets = {
+            gradle: `// Add to repositories block
+maven {
+    url "https://yourusername.github.io/builders-zenith/maven"
+}
+
+// Add to dependencies block
+implementation "com.yourname.builderszenith:builders-zenith-1.21.1:1.0.0"`,
+
+            maven: `<repository>
+    <id>builders-zenith</id>
+    <url>https://yourusername.github.io/builders-zenith/maven</url>
+</repository>
+
+<dependency>
+    <groupId>com.yourname.builderszenith</groupId>
+    <artifactId>builders-zenith-1.21.1</artifactId>
+    <version>1.0.0</version>
+</dependency>`
+        };
+
+        function copy(btn, type) {
+            navigator.clipboard.writeText(snippets[type]).then(() => {
+                const original = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = original;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Animate file items on load
+        document.querySelectorAll('.file-item').forEach((item, i) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(-10px)';
+            setTimeout(() => {
+                item.style.transition = 'all 0.3s ease';
+                item.style.opacity = '1';
+                item.style.transform = 'translateX(0)';
+            }, i * 50);
+        });
+    </script>
+
+</body>
+</html>
