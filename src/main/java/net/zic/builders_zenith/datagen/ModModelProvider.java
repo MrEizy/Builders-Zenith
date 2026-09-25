@@ -87,24 +87,24 @@ public class ModModelProvider extends ModelProvider {
         registerVerticalSlab(blockModels, ModBlocks.POLISHED_TUFF_VERTICAL_SLAB.get(), Blocks.POLISHED_TUFF, "polished_tuff");
         registerVerticalSlab(blockModels, ModBlocks.TUFF_BRICK_VERTICAL_SLAB.get(), Blocks.TUFF_BRICKS, "tuff_bricks");
         registerVerticalSlab(blockModels, ModBlocks.BRICK_VERTICAL_SLAB.get(), Blocks.BRICKS, "bricks");
-        registerVerticalSlab(blockModels, ModBlocks.SANDSTONE_VERTICAL_SLAB.get(), Blocks.SANDSTONE, "sandstone");
-        registerVerticalSlab(blockModels, ModBlocks.SMOOTH_SANDSTONE_VERTICAL_SLAB.get(), Blocks.SMOOTH_SANDSTONE, "smooth_sandstone");
-        registerVerticalSlab(blockModels, ModBlocks.CUT_SANDSTONE_VERTICAL_SLAB.get(), Blocks.CUT_SANDSTONE, "cut_sandstone");
-        registerVerticalSlab(blockModels, ModBlocks.RED_SANDSTONE_VERTICAL_SLAB.get(), Blocks.RED_SANDSTONE, "red_sandstone");
-        registerVerticalSlab(blockModels, ModBlocks.SMOOTH_RED_SANDSTONE_VERTICAL_SLAB.get(), Blocks.SMOOTH_RED_SANDSTONE, "smooth_red_sandstone");
-        registerVerticalSlab(blockModels, ModBlocks.CUT_RED_SANDSTONE_VERTICAL_SLAB.get(), Blocks.CUT_RED_SANDSTONE, "cut_red_sandstone");
+        registerVerticalSlab(blockModels, ModBlocks.SANDSTONE_VERTICAL_SLAB.get(), Blocks.SANDSTONE, "sandstone", "sandstone_bottom", "sandstone_top");
+        registerVerticalSlab(blockModels, ModBlocks.SMOOTH_SANDSTONE_VERTICAL_SLAB.get(), Blocks.SMOOTH_SANDSTONE, "sandstone_top");
+        registerVerticalSlab(blockModels, ModBlocks.CUT_SANDSTONE_VERTICAL_SLAB.get(), Blocks.CUT_SANDSTONE, "cut_sandstone", "sandstone_top", "sandstone_top");
+        registerVerticalSlab(blockModels, ModBlocks.RED_SANDSTONE_VERTICAL_SLAB.get(), Blocks.RED_SANDSTONE, "red_sandstone", "red_sandstone_bottom", "red_sandstone_top");
+        registerVerticalSlab(blockModels, ModBlocks.SMOOTH_RED_SANDSTONE_VERTICAL_SLAB.get(), Blocks.SMOOTH_RED_SANDSTONE, "red_sandstone_top");
+        registerVerticalSlab(blockModels, ModBlocks.CUT_RED_SANDSTONE_VERTICAL_SLAB.get(), Blocks.CUT_RED_SANDSTONE, "cut_red_sandstone", "red_sandstone_top", "red_sandstone_top");
         registerVerticalSlab(blockModels, ModBlocks.PRISMARINE_VERTICAL_SLAB.get(), Blocks.PRISMARINE, "prismarine");
         registerVerticalSlab(blockModels, ModBlocks.PRISMARINE_BRICK_VERTICAL_SLAB.get(), Blocks.PRISMARINE_BRICKS, "prismarine_bricks");
         registerVerticalSlab(blockModels, ModBlocks.DARK_PRISMARINE_VERTICAL_SLAB.get(), Blocks.DARK_PRISMARINE, "dark_prismarine");
         registerVerticalSlab(blockModels, ModBlocks.NETHER_BRICK_VERTICAL_SLAB.get(), Blocks.NETHER_BRICKS, "nether_bricks");
         registerVerticalSlab(blockModels, ModBlocks.RED_NETHER_BRICK_VERTICAL_SLAB.get(), Blocks.RED_NETHER_BRICKS, "red_nether_bricks");
-        registerVerticalSlab(blockModels, ModBlocks.BLACKSTONE_VERTICAL_SLAB.get(), Blocks.BLACKSTONE, "blackstone");
+        registerVerticalSlab(blockModels, ModBlocks.BLACKSTONE_VERTICAL_SLAB.get(), Blocks.BLACKSTONE, "blackstone", "blackstone_top", "blackstone_top");
         registerVerticalSlab(blockModels, ModBlocks.POLISHED_BLACKSTONE_VERTICAL_SLAB.get(), Blocks.POLISHED_BLACKSTONE, "polished_blackstone");
         registerVerticalSlab(blockModels, ModBlocks.POLISHED_BLACKSTONE_BRICK_VERTICAL_SLAB.get(), Blocks.POLISHED_BLACKSTONE_BRICKS, "polished_blackstone_bricks");
         registerVerticalSlab(blockModels, ModBlocks.END_STONE_BRICK_VERTICAL_SLAB.get(), Blocks.END_STONE_BRICKS, "end_stone_bricks");
         registerVerticalSlab(blockModels, ModBlocks.PURPUR_VERTICAL_SLAB.get(), Blocks.PURPUR_BLOCK, "purpur_block");
-        registerVerticalSlab(blockModels, ModBlocks.QUARTZ_VERTICAL_SLAB.get(), Blocks.QUARTZ_BLOCK, "quartz_block");
-        registerVerticalSlab(blockModels, ModBlocks.SMOOTH_QUARTZ_VERTICAL_SLAB.get(), Blocks.SMOOTH_QUARTZ, "smooth_quartz");
+        registerVerticalSlab(blockModels, ModBlocks.QUARTZ_VERTICAL_SLAB.get(), Blocks.QUARTZ_BLOCK, "quartz_block_side", "quartz_block_top", "quartz_block_top");
+        registerVerticalSlab(blockModels, ModBlocks.SMOOTH_QUARTZ_VERTICAL_SLAB.get(), Blocks.SMOOTH_QUARTZ, "quartz_block_bottom");
 
         // ── Dyed bricks ──────────────────────────────────────────────────────
         for (DyedBrickType type : DyedBrickType.values()) {
@@ -117,18 +117,23 @@ public class ModModelProvider extends ModelProvider {
     // ========================================================================
 
     private void registerVerticalSlab(BlockModelGenerators blockModels, Block vertSlab, Block fullBlock, String texturePath) {
+        registerVerticalSlab(blockModels, vertSlab, fullBlock, texturePath, texturePath, texturePath);
+    }
+
+    private void registerVerticalSlab(BlockModelGenerators blockModels, Block vertSlab, Block fullBlock, String sideTexture, String bottomTexture, String topTexture) {
         ModelTemplate template = new ModelTemplate(
                 Optional.of(modLoc("block/template_vertical_slab")),
                 Optional.empty(),
-                TextureSlot.SIDE, TextureSlot.BOTTOM, TextureSlot.TOP
+                TextureSlot.SIDE,
+                TextureSlot.BOTTOM,
+                TextureSlot.TOP
         );
 
-        Material material = new Material(Identifier.fromNamespaceAndPath("minecraft", "block/" + texturePath));
+        Material sideMaterial = new Material(Identifier.fromNamespaceAndPath("minecraft", "block/" + sideTexture));
+        Material bottomMaterial = new Material(Identifier.fromNamespaceAndPath("minecraft", "block/" + bottomTexture));
+        Material topMaterial = new Material(Identifier.fromNamespaceAndPath("minecraft", "block/" + topTexture));
 
-        TextureMapping textures = new TextureMapping()
-                .put(TextureSlot.SIDE,   material)
-                .put(TextureSlot.BOTTOM, material)
-                .put(TextureSlot.TOP,    material);
+        TextureMapping textures = new TextureMapping().put(TextureSlot.SIDE, sideMaterial).put(TextureSlot.BOTTOM, bottomMaterial).put(TextureSlot.TOP, topMaterial);
 
         Identifier slabModel = template.create(
                 ModelLocationUtils.getModelLocation(vertSlab),
@@ -154,19 +159,22 @@ public class ModModelProvider extends ModelProvider {
                                 new ConditionBuilder()
                                         .term(VerticalSlabBlock.DOUBLE, false)
                                         .term(VerticalSlabBlock.FACING, Direction.EAST),
-                                BlockModelGenerators.plainVariant(slabModel).with(BlockModelGenerators.Y_ROT_90)
+                                BlockModelGenerators.plainVariant(slabModel)
+                                        .with(BlockModelGenerators.Y_ROT_90)
                         )
                         .with(
                                 new ConditionBuilder()
                                         .term(VerticalSlabBlock.DOUBLE, false)
                                         .term(VerticalSlabBlock.FACING, Direction.SOUTH),
-                                BlockModelGenerators.plainVariant(slabModel).with(BlockModelGenerators.Y_ROT_180)
+                                BlockModelGenerators.plainVariant(slabModel)
+                                        .with(BlockModelGenerators.Y_ROT_180)
                         )
                         .with(
                                 new ConditionBuilder()
                                         .term(VerticalSlabBlock.DOUBLE, false)
                                         .term(VerticalSlabBlock.FACING, Direction.WEST),
-                                BlockModelGenerators.plainVariant(slabModel).with(BlockModelGenerators.Y_ROT_270)
+                                BlockModelGenerators.plainVariant(slabModel)
+                                        .with(BlockModelGenerators.Y_ROT_270)
                         )
         );
 
