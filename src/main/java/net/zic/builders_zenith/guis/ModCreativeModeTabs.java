@@ -51,6 +51,213 @@ public class ModCreativeModeTabs {
                             output.accept(ModBlocks.DYED_BRICK_SLABS.get(type));
                             output.accept(ModBlocks.DYED_BRICK_WALLS.get(type));
                         }
+                        // White
+                        output.accept(ModBlocks.MARBLE);
+                        output.accept(ModBlocks.MARBLE_BRICKS);
+                        output.accept(ModBlocks.MARBLE_CHISELED);
+                        output.accept(ModBlocks.MARBLE_TILES);
+                        output.accept(ModBlocks.POLISHED_MARBLE);
+                        output.accept(ModBlocks.MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.MARBLE_TILE_WALLS);
+
+                        // Light Gray
+                        output.accept(ModBlocks.LIGHT_GRAY_MARBLE);
+                        output.accept(ModBlocks.LIGHT_GRAY_MARBLE_BRICKS);
+                        output.accept(ModBlocks.LIGHT_GRAY_MARBLE_CHISELED);
+                        output.accept(ModBlocks.LIGHT_GRAY_MARBLE_TILES);
+                        output.accept(ModBlocks.POLISHED_LIGHT_GRAY_MARBLE);
+                        output.accept(ModBlocks.LIGHT_GRAY_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.LIGHT_GRAY_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.LIGHT_GRAY_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.LIGHT_GRAY_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.LIGHT_GRAY_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.LIGHT_GRAY_MARBLE_TILE_WALLS);
+
+                        // Gray
+                        output.accept(ModBlocks.GRAY_MARBLE);
+                        output.accept(ModBlocks.GRAY_MARBLE_BRICKS);
+                        output.accept(ModBlocks.GRAY_MARBLE_CHISELED);
+                        output.accept(ModBlocks.GRAY_MARBLE_TILES);
+                        output.accept(ModBlocks.GRAY_POLISHED_MARBLE);
+                        output.accept(ModBlocks.GRAY_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.GRAY_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.GRAY_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.GRAY_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.GRAY_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.GRAY_MARBLE_TILE_WALLS);
+
+                        // Black
+                        output.accept(ModBlocks.BLACK_MARBLE);
+                        output.accept(ModBlocks.BLACK_MARBLE_BRICKS);
+                        output.accept(ModBlocks.BLACK_MARBLE_CHISELED);
+                        output.accept(ModBlocks.BLACK_MARBLE_TILES);
+                        output.accept(ModBlocks.BLACK_POLISHED_MARBLE);
+                        output.accept(ModBlocks.BLACK_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.BLACK_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.BLACK_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.BLACK_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.BLACK_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.BLACK_MARBLE_TILE_WALLS);
+
+                        // Brown
+                        output.accept(ModBlocks.BROWN_MARBLE);
+                        output.accept(ModBlocks.BROWN_MARBLE_BRICKS);
+                        output.accept(ModBlocks.BROWN_MARBLE_CHISELED);
+                        output.accept(ModBlocks.BROWN_MARBLE_TILES);
+                        output.accept(ModBlocks.BROWN_POLISHED_MARBLE);
+                        output.accept(ModBlocks.BROWN_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.BROWN_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.BROWN_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.BROWN_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.BROWN_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.BROWN_MARBLE_TILE_WALLS);
+
+                        // Red
+                        output.accept(ModBlocks.RED_MARBLE);
+                        output.accept(ModBlocks.RED_MARBLE_BRICKS);
+                        output.accept(ModBlocks.RED_MARBLE_CHISELED);
+                        output.accept(ModBlocks.RED_MARBLE_TILES);
+                        output.accept(ModBlocks.RED_POLISHED_MARBLE);
+                        output.accept(ModBlocks.RED_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.RED_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.RED_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.RED_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.RED_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.RED_MARBLE_TILE_WALLS);
+
+                        // Orange
+                        output.accept(ModBlocks.ORANGE_MARBLE);
+                        output.accept(ModBlocks.ORANGE_MARBLE_BRICKS);
+                        output.accept(ModBlocks.ORANGE_MARBLE_CHISELED);
+                        output.accept(ModBlocks.ORANGE_MARBLE_TILES);
+                        output.accept(ModBlocks.ORANGE_POLISHED_MARBLE);
+                        output.accept(ModBlocks.ORANGE_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.ORANGE_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.ORANGE_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.ORANGE_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.ORANGE_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.ORANGE_MARBLE_TILE_WALLS);
+
+                        // Yellow
+                        output.accept(ModBlocks.YELLOW_MARBLE);
+                        output.accept(ModBlocks.YELLOW_MARBLE_BRICKS);
+                        output.accept(ModBlocks.YELLOW_MARBLE_CHISELED);
+                        output.accept(ModBlocks.YELLOW_MARBLE_TILES);
+                        output.accept(ModBlocks.YELLOW_POLISHED_MARBLE);
+                        output.accept(ModBlocks.YELLOW_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.YELLOW_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.YELLOW_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.YELLOW_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.YELLOW_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.YELLOW_MARBLE_TILE_WALLS);
+
+                        // Lime
+                        output.accept(ModBlocks.LIME_MARBLE);
+                        output.accept(ModBlocks.LIME_MARBLE_BRICKS);
+                        output.accept(ModBlocks.LIME_MARBLE_CHISELED);
+                        output.accept(ModBlocks.LIME_MARBLE_TILES);
+                        output.accept(ModBlocks.LIME_POLISHED_MARBLE);
+                        output.accept(ModBlocks.LIME_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.LIME_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.LIME_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.LIME_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.LIME_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.LIME_MARBLE_TILE_WALLS);
+
+                        // Green
+                        output.accept(ModBlocks.GREEN_MARBLE);
+                        output.accept(ModBlocks.GREEN_MARBLE_BRICKS);
+                        output.accept(ModBlocks.GREEN_MARBLE_CHISELED);
+                        output.accept(ModBlocks.GREEN_MARBLE_TILES);
+                        output.accept(ModBlocks.GREEN_POLISHED_MARBLE);
+                        output.accept(ModBlocks.GREEN_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.GREEN_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.GREEN_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.GREEN_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.GREEN_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.GREEN_MARBLE_TILE_WALLS);
+
+                        // Cyan
+                        output.accept(ModBlocks.CYAN_MARBLE);
+                        output.accept(ModBlocks.CYAN_MARBLE_BRICKS);
+                        output.accept(ModBlocks.CYAN_MARBLE_CHISELED);
+                        output.accept(ModBlocks.CYAN_MARBLE_TILES);
+                        output.accept(ModBlocks.CYAN_POLISHED_MARBLE);
+                        output.accept(ModBlocks.CYAN_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.CYAN_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.CYAN_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.CYAN_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.CYAN_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.CYAN_MARBLE_TILE_WALLS);
+
+                        // Light Blue
+                        output.accept(ModBlocks.LIGHT_BLUE_MARBLE);
+                        output.accept(ModBlocks.LIGHT_BLUE_MARBLE_BRICKS);
+                        output.accept(ModBlocks.LIGHT_BLUE_MARBLE_CHISELED);
+                        output.accept(ModBlocks.LIGHT_BLUE_MARBLE_TILES);
+                        output.accept(ModBlocks.LIGHT_BLUE_POLISHED_MARBLE);
+                        output.accept(ModBlocks.LIGHT_BLUE_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.LIGHT_BLUE_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.LIGHT_BLUE_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.LIGHT_BLUE_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.LIGHT_BLUE_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.LIGHT_BLUE_MARBLE_TILE_WALLS);
+
+                        // Blue
+                        output.accept(ModBlocks.BLUE_MARBLE);
+                        output.accept(ModBlocks.BLUE_MARBLE_BRICKS);
+                        output.accept(ModBlocks.BLUE_MARBLE_CHISELED);
+                        output.accept(ModBlocks.BLUE_MARBLE_TILES);
+                        output.accept(ModBlocks.BLUE_POLISHED_MARBLE);
+                        output.accept(ModBlocks.BLUE_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.BLUE_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.BLUE_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.BLUE_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.BLUE_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.BLUE_MARBLE_TILE_WALLS);
+
+                        // Purple
+                        output.accept(ModBlocks.PURPLE_MARBLE);
+                        output.accept(ModBlocks.PURPLE_MARBLE_BRICKS);
+                        output.accept(ModBlocks.PURPLE_MARBLE_CHISELED);
+                        output.accept(ModBlocks.PURPLE_MARBLE_TILES);
+                        output.accept(ModBlocks.PURPLE_POLISHED_MARBLE);
+                        output.accept(ModBlocks.PURPLE_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.PURPLE_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.PURPLE_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.PURPLE_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.PURPLE_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.PURPLE_MARBLE_TILE_WALLS);
+
+                        // Magenta
+                        output.accept(ModBlocks.MAGENTA_MARBLE);
+                        output.accept(ModBlocks.MAGENTA_MARBLE_BRICKS);
+                        output.accept(ModBlocks.MAGENTA_MARBLE_CHISELED);
+                        output.accept(ModBlocks.MAGENTA_MARBLE_TILES);
+                        output.accept(ModBlocks.MAGENTA_POLISHED_MARBLE);
+                        output.accept(ModBlocks.MAGENTA_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.MAGENTA_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.MAGENTA_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.MAGENTA_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.MAGENTA_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.MAGENTA_MARBLE_TILE_WALLS);
+
+                        // Pink
+                        output.accept(ModBlocks.PINK_MARBLE);
+                        output.accept(ModBlocks.PINK_MARBLE_BRICKS);
+                        output.accept(ModBlocks.PINK_MARBLE_CHISELED);
+                        output.accept(ModBlocks.PINK_MARBLE_TILES);
+                        output.accept(ModBlocks.PINK_POLISHED_MARBLE);
+                        output.accept(ModBlocks.PINK_MARBLE_BRICK_STAIRS);
+                        output.accept(ModBlocks.PINK_MARBLE_TILE_STAIRS);
+                        output.accept(ModBlocks.PINK_MARBLE_BRICK_SLABS);
+                        output.accept(ModBlocks.PINK_MARBLE_TILE_SLABS);
+                        output.accept(ModBlocks.PINK_MARBLE_BRICK_WALLS);
+                        output.accept(ModBlocks.PINK_MARBLE_TILE_WALLS);
                     }).build());
 
     @SubscribeEvent

@@ -76,6 +76,216 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.QUARTZ_VERTICAL_SLAB.get());
         dropSelf(ModBlocks.SMOOTH_QUARTZ_VERTICAL_SLAB.get());
 
+        // ── Marble ────────────────────────────────────────────────────────────────
+
+        // White
+        dropSelf(ModBlocks.MARBLE.get());
+        dropSelf(ModBlocks.MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.MARBLE_TILES.get());
+        dropSelf(ModBlocks.POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.MARBLE_TILE_WALLS.get());
+
+        // Light Gray
+        dropSelf(ModBlocks.LIGHT_GRAY_MARBLE.get());
+        dropSelf(ModBlocks.LIGHT_GRAY_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.LIGHT_GRAY_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.LIGHT_GRAY_MARBLE_TILES.get());
+        dropSelf(ModBlocks.POLISHED_LIGHT_GRAY_MARBLE.get());
+        dropSelf(ModBlocks.LIGHT_GRAY_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.LIGHT_GRAY_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.LIGHT_GRAY_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.LIGHT_GRAY_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.LIGHT_GRAY_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.LIGHT_GRAY_MARBLE_TILE_WALLS.get());
+
+        // Gray
+        dropSelf(ModBlocks.GRAY_MARBLE.get());
+        dropSelf(ModBlocks.GRAY_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.GRAY_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.GRAY_MARBLE_TILES.get());
+        dropSelf(ModBlocks.GRAY_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.GRAY_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.GRAY_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.GRAY_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.GRAY_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.GRAY_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.GRAY_MARBLE_TILE_WALLS.get());
+
+        // Black
+        dropSelf(ModBlocks.BLACK_MARBLE.get());
+        dropSelf(ModBlocks.BLACK_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.BLACK_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.BLACK_MARBLE_TILES.get());
+        dropSelf(ModBlocks.BLACK_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.BLACK_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.BLACK_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.BLACK_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.BLACK_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.BLACK_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.BLACK_MARBLE_TILE_WALLS.get());
+
+        // Brown
+        dropSelf(ModBlocks.BROWN_MARBLE.get());
+        dropSelf(ModBlocks.BROWN_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.BROWN_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.BROWN_MARBLE_TILES.get());
+        dropSelf(ModBlocks.BROWN_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.BROWN_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.BROWN_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.BROWN_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.BROWN_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.BROWN_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.BROWN_MARBLE_TILE_WALLS.get());
+
+        // Red
+        dropSelf(ModBlocks.RED_MARBLE.get());
+        dropSelf(ModBlocks.RED_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.RED_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.RED_MARBLE_TILES.get());
+        dropSelf(ModBlocks.RED_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.RED_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.RED_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.RED_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.RED_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.RED_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.RED_MARBLE_TILE_WALLS.get());
+
+        // Orange
+        dropSelf(ModBlocks.ORANGE_MARBLE.get());
+        dropSelf(ModBlocks.ORANGE_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.ORANGE_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.ORANGE_MARBLE_TILES.get());
+        dropSelf(ModBlocks.ORANGE_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.ORANGE_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.ORANGE_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.ORANGE_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.ORANGE_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.ORANGE_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.ORANGE_MARBLE_TILE_WALLS.get());
+
+        // Yellow
+        dropSelf(ModBlocks.YELLOW_MARBLE.get());
+        dropSelf(ModBlocks.YELLOW_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.YELLOW_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.YELLOW_MARBLE_TILES.get());
+        dropSelf(ModBlocks.YELLOW_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.YELLOW_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.YELLOW_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.YELLOW_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.YELLOW_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.YELLOW_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.YELLOW_MARBLE_TILE_WALLS.get());
+
+        // Lime
+        dropSelf(ModBlocks.LIME_MARBLE.get());
+        dropSelf(ModBlocks.LIME_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.LIME_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.LIME_MARBLE_TILES.get());
+        dropSelf(ModBlocks.LIME_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.LIME_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.LIME_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.LIME_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.LIME_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.LIME_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.LIME_MARBLE_TILE_WALLS.get());
+
+        // Green
+        dropSelf(ModBlocks.GREEN_MARBLE.get());
+        dropSelf(ModBlocks.GREEN_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.GREEN_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.GREEN_MARBLE_TILES.get());
+        dropSelf(ModBlocks.GREEN_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.GREEN_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.GREEN_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.GREEN_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.GREEN_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.GREEN_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.GREEN_MARBLE_TILE_WALLS.get());
+
+        // Cyan
+        dropSelf(ModBlocks.CYAN_MARBLE.get());
+        dropSelf(ModBlocks.CYAN_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.CYAN_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.CYAN_MARBLE_TILES.get());
+        dropSelf(ModBlocks.CYAN_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.CYAN_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.CYAN_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.CYAN_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.CYAN_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.CYAN_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.CYAN_MARBLE_TILE_WALLS.get());
+
+        // Light Blue
+        dropSelf(ModBlocks.LIGHT_BLUE_MARBLE.get());
+        dropSelf(ModBlocks.LIGHT_BLUE_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.LIGHT_BLUE_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.LIGHT_BLUE_MARBLE_TILES.get());
+        dropSelf(ModBlocks.LIGHT_BLUE_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.LIGHT_BLUE_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.LIGHT_BLUE_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.LIGHT_BLUE_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.LIGHT_BLUE_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.LIGHT_BLUE_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.LIGHT_BLUE_MARBLE_TILE_WALLS.get());
+
+        // Blue
+        dropSelf(ModBlocks.BLUE_MARBLE.get());
+        dropSelf(ModBlocks.BLUE_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.BLUE_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.BLUE_MARBLE_TILES.get());
+        dropSelf(ModBlocks.BLUE_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.BLUE_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.BLUE_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.BLUE_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.BLUE_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.BLUE_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.BLUE_MARBLE_TILE_WALLS.get());
+
+        // Purple
+        dropSelf(ModBlocks.PURPLE_MARBLE.get());
+        dropSelf(ModBlocks.PURPLE_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.PURPLE_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.PURPLE_MARBLE_TILES.get());
+        dropSelf(ModBlocks.PURPLE_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.PURPLE_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.PURPLE_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.PURPLE_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.PURPLE_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.PURPLE_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.PURPLE_MARBLE_TILE_WALLS.get());
+
+        // Magenta
+        dropSelf(ModBlocks.MAGENTA_MARBLE.get());
+        dropSelf(ModBlocks.MAGENTA_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.MAGENTA_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.MAGENTA_MARBLE_TILES.get());
+        dropSelf(ModBlocks.MAGENTA_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.MAGENTA_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.MAGENTA_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.MAGENTA_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.MAGENTA_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.MAGENTA_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.MAGENTA_MARBLE_TILE_WALLS.get());
+
+        // Pink
+        dropSelf(ModBlocks.PINK_MARBLE.get());
+        dropSelf(ModBlocks.PINK_MARBLE_BRICKS.get());
+        dropSelf(ModBlocks.PINK_MARBLE_CHISELED.get());
+        dropSelf(ModBlocks.PINK_MARBLE_TILES.get());
+        dropSelf(ModBlocks.PINK_POLISHED_MARBLE.get());
+        dropSelf(ModBlocks.PINK_MARBLE_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.PINK_MARBLE_TILE_STAIRS.get());
+        dropSelf(ModBlocks.PINK_MARBLE_BRICK_SLABS.get());
+        dropSelf(ModBlocks.PINK_MARBLE_TILE_SLABS.get());
+        dropSelf(ModBlocks.PINK_MARBLE_BRICK_WALLS.get());
+        dropSelf(ModBlocks.PINK_MARBLE_TILE_WALLS.get());
+
 
 
         ModBlocks.DYED_BRICKS.values().forEach(blockDeferred ->

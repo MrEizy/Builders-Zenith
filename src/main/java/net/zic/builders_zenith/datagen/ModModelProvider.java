@@ -11,9 +11,9 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.color.item.Constant;
-import net.minecraft.client.renderer.block.model.BlockStateModelWrapper;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
@@ -29,7 +29,9 @@ import net.zic.builders_zenith.blocks.custom.DyedBrickType;
 import net.zic.builders_zenith.blocks.custom.blockz.VerticalSlabBlock;
 import net.zic.builders_zenith.items.ModItems;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class ModModelProvider extends ModelProvider {
@@ -110,10 +112,227 @@ public class ModModelProvider extends ModelProvider {
         for (DyedBrickType type : DyedBrickType.values()) {
             registerDyedBrickFamily(blockModels, itemModels, type);
         }
+
+        // ── Marble (all 16 colors × 5 variants + stairs/slabs/walls) ────────
+        registerMarbleModels(blockModels);
     }
 
     // ========================================================================
-    // Wood / Stone Vertical Slabs (1 model + rotation in blockstate)
+    // Marble
+    // ========================================================================
+
+    private static final Map<Block, StairBlock> MARBLE_STAIRS_BY_BASE = new HashMap<>();
+    private static final Map<Block, SlabBlock>  MARBLE_SLABS_BY_BASE  = new HashMap<>();
+    private static final Map<Block, WallBlock>  MARBLE_WALLS_BY_BASE  = new HashMap<>();
+
+    private static final List<Block> MARBLE_FULL_BLOCKS = List.of(
+            ModBlocks.MARBLE.get(),             ModBlocks.MARBLE_BRICKS.get(),             ModBlocks.MARBLE_CHISELED.get(),             ModBlocks.MARBLE_TILES.get(),             ModBlocks.POLISHED_MARBLE.get(),
+            ModBlocks.LIGHT_GRAY_MARBLE.get(),          ModBlocks.LIGHT_GRAY_MARBLE_BRICKS.get(),          ModBlocks.LIGHT_GRAY_MARBLE_CHISELED.get(),          ModBlocks.LIGHT_GRAY_MARBLE_TILES.get(),          ModBlocks.POLISHED_LIGHT_GRAY_MARBLE.get(),
+            ModBlocks.GRAY_MARBLE.get(),                ModBlocks.GRAY_MARBLE_BRICKS.get(),                ModBlocks.GRAY_MARBLE_CHISELED.get(),                ModBlocks.GRAY_MARBLE_TILES.get(),                ModBlocks.GRAY_POLISHED_MARBLE.get(),
+            ModBlocks.BLACK_MARBLE.get(),               ModBlocks.BLACK_MARBLE_BRICKS.get(),               ModBlocks.BLACK_MARBLE_CHISELED.get(),               ModBlocks.BLACK_MARBLE_TILES.get(),               ModBlocks.BLACK_POLISHED_MARBLE.get(),
+            ModBlocks.BROWN_MARBLE.get(),               ModBlocks.BROWN_MARBLE_BRICKS.get(),               ModBlocks.BROWN_MARBLE_CHISELED.get(),               ModBlocks.BROWN_MARBLE_TILES.get(),               ModBlocks.BROWN_POLISHED_MARBLE.get(),
+            ModBlocks.RED_MARBLE.get(),                 ModBlocks.RED_MARBLE_BRICKS.get(),                 ModBlocks.RED_MARBLE_CHISELED.get(),                 ModBlocks.RED_MARBLE_TILES.get(),                 ModBlocks.RED_POLISHED_MARBLE.get(),
+            ModBlocks.ORANGE_MARBLE.get(),              ModBlocks.ORANGE_MARBLE_BRICKS.get(),              ModBlocks.ORANGE_MARBLE_CHISELED.get(),              ModBlocks.ORANGE_MARBLE_TILES.get(),              ModBlocks.ORANGE_POLISHED_MARBLE.get(),
+            ModBlocks.YELLOW_MARBLE.get(),              ModBlocks.YELLOW_MARBLE_BRICKS.get(),              ModBlocks.YELLOW_MARBLE_CHISELED.get(),              ModBlocks.YELLOW_MARBLE_TILES.get(),              ModBlocks.YELLOW_POLISHED_MARBLE.get(),
+            ModBlocks.LIME_MARBLE.get(),                ModBlocks.LIME_MARBLE_BRICKS.get(),                ModBlocks.LIME_MARBLE_CHISELED.get(),                ModBlocks.LIME_MARBLE_TILES.get(),                ModBlocks.LIME_POLISHED_MARBLE.get(),
+            ModBlocks.GREEN_MARBLE.get(),               ModBlocks.GREEN_MARBLE_BRICKS.get(),               ModBlocks.GREEN_MARBLE_CHISELED.get(),               ModBlocks.GREEN_MARBLE_TILES.get(),               ModBlocks.GREEN_POLISHED_MARBLE.get(),
+            ModBlocks.CYAN_MARBLE.get(),                ModBlocks.CYAN_MARBLE_BRICKS.get(),                ModBlocks.CYAN_MARBLE_CHISELED.get(),                ModBlocks.CYAN_MARBLE_TILES.get(),                ModBlocks.CYAN_POLISHED_MARBLE.get(),
+            ModBlocks.LIGHT_BLUE_MARBLE.get(),          ModBlocks.LIGHT_BLUE_MARBLE_BRICKS.get(),          ModBlocks.LIGHT_BLUE_MARBLE_CHISELED.get(),          ModBlocks.LIGHT_BLUE_MARBLE_TILES.get(),          ModBlocks.LIGHT_BLUE_POLISHED_MARBLE.get(),
+            ModBlocks.BLUE_MARBLE.get(),                ModBlocks.BLUE_MARBLE_BRICKS.get(),                ModBlocks.BLUE_MARBLE_CHISELED.get(),                ModBlocks.BLUE_MARBLE_TILES.get(),                ModBlocks.BLUE_POLISHED_MARBLE.get(),
+            ModBlocks.PURPLE_MARBLE.get(),              ModBlocks.PURPLE_MARBLE_BRICKS.get(),              ModBlocks.PURPLE_MARBLE_CHISELED.get(),              ModBlocks.PURPLE_MARBLE_TILES.get(),              ModBlocks.PURPLE_POLISHED_MARBLE.get(),
+            ModBlocks.MAGENTA_MARBLE.get(),             ModBlocks.MAGENTA_MARBLE_BRICKS.get(),             ModBlocks.MAGENTA_MARBLE_CHISELED.get(),             ModBlocks.MAGENTA_MARBLE_TILES.get(),             ModBlocks.MAGENTA_POLISHED_MARBLE.get(),
+            ModBlocks.PINK_MARBLE.get(),                ModBlocks.PINK_MARBLE_BRICKS.get(),                ModBlocks.PINK_MARBLE_CHISELED.get(),                ModBlocks.PINK_MARBLE_TILES.get(),                ModBlocks.PINK_POLISHED_MARBLE.get()
+    );
+
+    private static final List<Block> MARBLE_SSW_BASES = List.of(
+            ModBlocks.MARBLE_BRICKS.get(),      ModBlocks.MARBLE_TILES.get(),
+            ModBlocks.LIGHT_GRAY_MARBLE_BRICKS.get(),   ModBlocks.LIGHT_GRAY_MARBLE_TILES.get(),
+            ModBlocks.GRAY_MARBLE_BRICKS.get(),         ModBlocks.GRAY_MARBLE_TILES.get(),
+            ModBlocks.BLACK_MARBLE_BRICKS.get(),        ModBlocks.BLACK_MARBLE_TILES.get(),
+            ModBlocks.BROWN_MARBLE_BRICKS.get(),        ModBlocks.BROWN_MARBLE_TILES.get(),
+            ModBlocks.RED_MARBLE_BRICKS.get(),          ModBlocks.RED_MARBLE_TILES.get(),
+            ModBlocks.ORANGE_MARBLE_BRICKS.get(),       ModBlocks.ORANGE_MARBLE_TILES.get(),
+            ModBlocks.YELLOW_MARBLE_BRICKS.get(),       ModBlocks.YELLOW_MARBLE_TILES.get(),
+            ModBlocks.LIME_MARBLE_BRICKS.get(),         ModBlocks.LIME_MARBLE_TILES.get(),
+            ModBlocks.GREEN_MARBLE_BRICKS.get(),        ModBlocks.GREEN_MARBLE_TILES.get(),
+            ModBlocks.CYAN_MARBLE_BRICKS.get(),         ModBlocks.CYAN_MARBLE_TILES.get(),
+            ModBlocks.LIGHT_BLUE_MARBLE_BRICKS.get(),   ModBlocks.LIGHT_BLUE_MARBLE_TILES.get(),
+            ModBlocks.BLUE_MARBLE_BRICKS.get(),         ModBlocks.BLUE_MARBLE_TILES.get(),
+            ModBlocks.PURPLE_MARBLE_BRICKS.get(),       ModBlocks.PURPLE_MARBLE_TILES.get(),
+            ModBlocks.MAGENTA_MARBLE_BRICKS.get(),      ModBlocks.MAGENTA_MARBLE_TILES.get(),
+            ModBlocks.PINK_MARBLE_BRICKS.get(),         ModBlocks.PINK_MARBLE_TILES.get()
+    );
+
+    static {
+        // stairs
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.MARBLE_BRICKS.get(), ModBlocks.MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.MARBLE_TILES.get(),  ModBlocks.MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.LIGHT_GRAY_MARBLE_BRICKS.get(),   ModBlocks.LIGHT_GRAY_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.LIGHT_GRAY_MARBLE_TILES.get(),    ModBlocks.LIGHT_GRAY_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.GRAY_MARBLE_BRICKS.get(),         ModBlocks.GRAY_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.GRAY_MARBLE_TILES.get(),          ModBlocks.GRAY_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.BLACK_MARBLE_BRICKS.get(),        ModBlocks.BLACK_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.BLACK_MARBLE_TILES.get(),         ModBlocks.BLACK_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.BROWN_MARBLE_BRICKS.get(),        ModBlocks.BROWN_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.BROWN_MARBLE_TILES.get(),         ModBlocks.BROWN_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.RED_MARBLE_BRICKS.get(),          ModBlocks.RED_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.RED_MARBLE_TILES.get(),           ModBlocks.RED_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.ORANGE_MARBLE_BRICKS.get(),       ModBlocks.ORANGE_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.ORANGE_MARBLE_TILES.get(),        ModBlocks.ORANGE_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.YELLOW_MARBLE_BRICKS.get(),       ModBlocks.YELLOW_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.YELLOW_MARBLE_TILES.get(),        ModBlocks.YELLOW_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.LIME_MARBLE_BRICKS.get(),         ModBlocks.LIME_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.LIME_MARBLE_TILES.get(),          ModBlocks.LIME_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.GREEN_MARBLE_BRICKS.get(),        ModBlocks.GREEN_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.GREEN_MARBLE_TILES.get(),         ModBlocks.GREEN_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.CYAN_MARBLE_BRICKS.get(),         ModBlocks.CYAN_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.CYAN_MARBLE_TILES.get(),          ModBlocks.CYAN_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.LIGHT_BLUE_MARBLE_BRICKS.get(),   ModBlocks.LIGHT_BLUE_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.LIGHT_BLUE_MARBLE_TILES.get(),    ModBlocks.LIGHT_BLUE_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.BLUE_MARBLE_BRICKS.get(),         ModBlocks.BLUE_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.BLUE_MARBLE_TILES.get(),          ModBlocks.BLUE_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.PURPLE_MARBLE_BRICKS.get(),       ModBlocks.PURPLE_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.PURPLE_MARBLE_TILES.get(),        ModBlocks.PURPLE_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.MAGENTA_MARBLE_BRICKS.get(),      ModBlocks.MAGENTA_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.MAGENTA_MARBLE_TILES.get(),       ModBlocks.MAGENTA_MARBLE_TILE_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.PINK_MARBLE_BRICKS.get(),         ModBlocks.PINK_MARBLE_BRICK_STAIRS.get());
+        MARBLE_STAIRS_BY_BASE.put(ModBlocks.PINK_MARBLE_TILES.get(),          ModBlocks.PINK_MARBLE_TILE_STAIRS.get());
+
+        // slabs
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.MARBLE_BRICKS.get(), ModBlocks.MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.MARBLE_TILES.get(),  ModBlocks.MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.LIGHT_GRAY_MARBLE_BRICKS.get(),    ModBlocks.LIGHT_GRAY_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.LIGHT_GRAY_MARBLE_TILES.get(),     ModBlocks.LIGHT_GRAY_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.GRAY_MARBLE_BRICKS.get(),          ModBlocks.GRAY_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.GRAY_MARBLE_TILES.get(),           ModBlocks.GRAY_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.BLACK_MARBLE_BRICKS.get(),         ModBlocks.BLACK_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.BLACK_MARBLE_TILES.get(),          ModBlocks.BLACK_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.BROWN_MARBLE_BRICKS.get(),         ModBlocks.BROWN_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.BROWN_MARBLE_TILES.get(),          ModBlocks.BROWN_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.RED_MARBLE_BRICKS.get(),           ModBlocks.RED_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.RED_MARBLE_TILES.get(),            ModBlocks.RED_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.ORANGE_MARBLE_BRICKS.get(),        ModBlocks.ORANGE_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.ORANGE_MARBLE_TILES.get(),         ModBlocks.ORANGE_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.YELLOW_MARBLE_BRICKS.get(),        ModBlocks.YELLOW_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.YELLOW_MARBLE_TILES.get(),         ModBlocks.YELLOW_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.LIME_MARBLE_BRICKS.get(),          ModBlocks.LIME_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.LIME_MARBLE_TILES.get(),           ModBlocks.LIME_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.GREEN_MARBLE_BRICKS.get(),         ModBlocks.GREEN_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.GREEN_MARBLE_TILES.get(),          ModBlocks.GREEN_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.CYAN_MARBLE_BRICKS.get(),          ModBlocks.CYAN_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.CYAN_MARBLE_TILES.get(),           ModBlocks.CYAN_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.LIGHT_BLUE_MARBLE_BRICKS.get(),    ModBlocks.LIGHT_BLUE_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.LIGHT_BLUE_MARBLE_TILES.get(),     ModBlocks.LIGHT_BLUE_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.BLUE_MARBLE_BRICKS.get(),          ModBlocks.BLUE_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.BLUE_MARBLE_TILES.get(),           ModBlocks.BLUE_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.PURPLE_MARBLE_BRICKS.get(),        ModBlocks.PURPLE_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.PURPLE_MARBLE_TILES.get(),         ModBlocks.PURPLE_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.MAGENTA_MARBLE_BRICKS.get(),       ModBlocks.MAGENTA_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.MAGENTA_MARBLE_TILES.get(),        ModBlocks.MAGENTA_MARBLE_TILE_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.PINK_MARBLE_BRICKS.get(),          ModBlocks.PINK_MARBLE_BRICK_SLABS.get());
+        MARBLE_SLABS_BY_BASE.put(ModBlocks.PINK_MARBLE_TILES.get(),           ModBlocks.PINK_MARBLE_TILE_SLABS.get());
+
+        // walls
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.MARBLE_BRICKS.get(), ModBlocks.MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.MARBLE_TILES.get(),  ModBlocks.MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.LIGHT_GRAY_MARBLE_BRICKS.get(),    ModBlocks.LIGHT_GRAY_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.LIGHT_GRAY_MARBLE_TILES.get(),     ModBlocks.LIGHT_GRAY_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.GRAY_MARBLE_BRICKS.get(),          ModBlocks.GRAY_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.GRAY_MARBLE_TILES.get(),           ModBlocks.GRAY_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.BLACK_MARBLE_BRICKS.get(),         ModBlocks.BLACK_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.BLACK_MARBLE_TILES.get(),          ModBlocks.BLACK_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.BROWN_MARBLE_BRICKS.get(),         ModBlocks.BROWN_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.BROWN_MARBLE_TILES.get(),          ModBlocks.BROWN_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.RED_MARBLE_BRICKS.get(),           ModBlocks.RED_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.RED_MARBLE_TILES.get(),            ModBlocks.RED_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.ORANGE_MARBLE_BRICKS.get(),        ModBlocks.ORANGE_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.ORANGE_MARBLE_TILES.get(),         ModBlocks.ORANGE_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.YELLOW_MARBLE_BRICKS.get(),        ModBlocks.YELLOW_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.YELLOW_MARBLE_TILES.get(),         ModBlocks.YELLOW_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.LIME_MARBLE_BRICKS.get(),          ModBlocks.LIME_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.LIME_MARBLE_TILES.get(),           ModBlocks.LIME_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.GREEN_MARBLE_BRICKS.get(),         ModBlocks.GREEN_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.GREEN_MARBLE_TILES.get(),          ModBlocks.GREEN_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.CYAN_MARBLE_BRICKS.get(),          ModBlocks.CYAN_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.CYAN_MARBLE_TILES.get(),           ModBlocks.CYAN_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.LIGHT_BLUE_MARBLE_BRICKS.get(),    ModBlocks.LIGHT_BLUE_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.LIGHT_BLUE_MARBLE_TILES.get(),     ModBlocks.LIGHT_BLUE_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.BLUE_MARBLE_BRICKS.get(),          ModBlocks.BLUE_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.BLUE_MARBLE_TILES.get(),           ModBlocks.BLUE_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.PURPLE_MARBLE_BRICKS.get(),        ModBlocks.PURPLE_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.PURPLE_MARBLE_TILES.get(),         ModBlocks.PURPLE_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.MAGENTA_MARBLE_BRICKS.get(),       ModBlocks.MAGENTA_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.MAGENTA_MARBLE_TILES.get(),        ModBlocks.MAGENTA_MARBLE_TILE_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.PINK_MARBLE_BRICKS.get(),          ModBlocks.PINK_MARBLE_BRICK_WALLS.get());
+        MARBLE_WALLS_BY_BASE.put(ModBlocks.PINK_MARBLE_TILES.get(),           ModBlocks.PINK_MARBLE_TILE_WALLS.get());
+    }
+
+    private void registerMarbleModels(BlockModelGenerators blockModels) {
+        // 1. Full-cube marble blocks
+        for (Block b : MARBLE_FULL_BLOCKS) {
+            blockModels.createTrivialCube(b);
+        }
+
+        // 2. Stairs / Slabs / Walls — build the model Identifier manually using
+        //    the vanilla ModelTemplates, then dispatch the blockstate ourselves.
+        for (Block base : MARBLE_SSW_BASES) {
+            Identifier blockId = BuiltInRegistries.BLOCK.getKey(base);
+            String path = blockId.getPath(); // e.g. "white_marble_bricks"
+            Material tex = new Material(Identifier.fromNamespaceAndPath(BuildersZenith.MOD_ID, "block/" + path));
+
+            TextureMapping tm = new TextureMapping()
+                    .put(TextureSlot.BOTTOM, tex)
+                    .put(TextureSlot.TOP,    tex)
+                    .put(TextureSlot.SIDE,   tex);
+
+            // ── Stairs ────────────────────────────────────────────────────
+            StairBlock stair = MARBLE_STAIRS_BY_BASE.get(base);
+            if (stair != null) {
+                Identifier straight = ModelTemplates.STAIRS_STRAIGHT.create(
+                        ModelLocationUtils.getModelLocation(stair), tm, blockModels.modelOutput);
+                Identifier inner = ModelTemplates.STAIRS_INNER.create(
+                        ModelLocationUtils.getModelLocation(stair, "_inner"), tm, blockModels.modelOutput);
+                Identifier outer = ModelTemplates.STAIRS_OUTER.create(
+                        ModelLocationUtils.getModelLocation(stair, "_outer"), tm, blockModels.modelOutput);
+                stairsBlock(blockModels, stair, straight, inner, outer);
+                blockModels.registerSimpleItemModel(stair, straight);
+            }
+
+            // ── Slabs ─────────────────────────────────────────────────────
+            SlabBlock slab = MARBLE_SLABS_BY_BASE.get(base);
+            if (slab != null) {
+                Identifier bottom = ModelTemplates.SLAB_BOTTOM.create(
+                        ModelLocationUtils.getModelLocation(slab), tm, blockModels.modelOutput);
+                Identifier top = ModelTemplates.SLAB_TOP.create(
+                        ModelLocationUtils.getModelLocation(slab, "_top"), tm, blockModels.modelOutput);
+                // Double slab uses the base full block's cube_all model
+                Identifier full = ModelTemplates.CUBE_ALL.create(
+                        ModelLocationUtils.getModelLocation(slab, "_double"),
+                        TextureMapping.cube(tex), blockModels.modelOutput);
+                slabBlock(blockModels, slab, bottom, top, full);
+                blockModels.registerSimpleItemModel(slab, bottom);
+            }
+
+            // ── Walls ─────────────────────────────────────────────────────
+            WallBlock wall = MARBLE_WALLS_BY_BASE.get(base);
+            if (wall != null) {
+                TextureMapping wallTex = new TextureMapping().put(TextureSlot.WALL, tex);
+                Identifier post = ModelTemplates.WALL_POST.create(
+                        ModelLocationUtils.getModelLocation(wall, "_post"), wallTex, blockModels.modelOutput);
+                Identifier side = ModelTemplates.WALL_LOW_SIDE.create(
+                        ModelLocationUtils.getModelLocation(wall, "_side"), wallTex, blockModels.modelOutput);
+                Identifier sideTall = ModelTemplates.WALL_TALL_SIDE.create(
+                        ModelLocationUtils.getModelLocation(wall, "_side_tall"), wallTex, blockModels.modelOutput);
+                Identifier inventory = ModelTemplates.WALL_INVENTORY.create(
+                        ModelLocationUtils.getModelLocation(wall, "_inventory"), wallTex, blockModels.modelOutput);
+                wallBlock(blockModels, wall, post, side, sideTall, inventory);
+                blockModels.registerSimpleItemModel(wall, inventory);
+            }
+        }
+    }
+
+    // ========================================================================
+    // Vertical Slabs
     // ========================================================================
 
     private void registerVerticalSlab(BlockModelGenerators blockModels, Block vertSlab, Block fullBlock, String texturePath) {
@@ -145,44 +364,18 @@ public class ModModelProvider extends ModelProvider {
 
         blockModels.blockStateOutput.accept(
                 MultiPartGenerator.multiPart(vertSlab)
-                        .with(
-                                new ConditionBuilder().term(VerticalSlabBlock.DOUBLE, true),
-                                BlockModelGenerators.plainVariant(fullModel)
-                        )
-                        .with(
-                                new ConditionBuilder()
-                                        .term(VerticalSlabBlock.DOUBLE, false)
-                                        .term(VerticalSlabBlock.FACING, Direction.NORTH),
-                                BlockModelGenerators.plainVariant(slabModel)
-                        )
-                        .with(
-                                new ConditionBuilder()
-                                        .term(VerticalSlabBlock.DOUBLE, false)
-                                        .term(VerticalSlabBlock.FACING, Direction.EAST),
-                                BlockModelGenerators.plainVariant(slabModel)
-                                        .with(BlockModelGenerators.Y_ROT_90)
-                        )
-                        .with(
-                                new ConditionBuilder()
-                                        .term(VerticalSlabBlock.DOUBLE, false)
-                                        .term(VerticalSlabBlock.FACING, Direction.SOUTH),
-                                BlockModelGenerators.plainVariant(slabModel)
-                                        .with(BlockModelGenerators.Y_ROT_180)
-                        )
-                        .with(
-                                new ConditionBuilder()
-                                        .term(VerticalSlabBlock.DOUBLE, false)
-                                        .term(VerticalSlabBlock.FACING, Direction.WEST),
-                                BlockModelGenerators.plainVariant(slabModel)
-                                        .with(BlockModelGenerators.Y_ROT_270)
-                        )
+                        .with(new ConditionBuilder().term(VerticalSlabBlock.DOUBLE, true), BlockModelGenerators.plainVariant(fullModel))
+                        .with(new ConditionBuilder().term(VerticalSlabBlock.DOUBLE, false).term(VerticalSlabBlock.FACING, Direction.NORTH), BlockModelGenerators.plainVariant(slabModel))
+                        .with(new ConditionBuilder().term(VerticalSlabBlock.DOUBLE, false).term(VerticalSlabBlock.FACING, Direction.EAST), BlockModelGenerators.plainVariant(slabModel).with(BlockModelGenerators.Y_ROT_90))
+                        .with(new ConditionBuilder().term(VerticalSlabBlock.DOUBLE, false).term(VerticalSlabBlock.FACING, Direction.SOUTH), BlockModelGenerators.plainVariant(slabModel).with(BlockModelGenerators.Y_ROT_180))
+                        .with(new ConditionBuilder().term(VerticalSlabBlock.DOUBLE, false).term(VerticalSlabBlock.FACING, Direction.WEST), BlockModelGenerators.plainVariant(slabModel).with(BlockModelGenerators.Y_ROT_270))
         );
 
         blockModels.registerSimpleItemModel(vertSlab, slabModel);
     }
 
     // ========================================================================
-    // Dyed Brick Family (shared templates across all colors)
+    // Dyed Brick Family
     // ========================================================================
 
     private void registerDyedBrickFamily(BlockModelGenerators blockModels, ItemModelGenerators itemModels, DyedBrickType type) {
@@ -210,12 +403,6 @@ public class ModModelProvider extends ModelProvider {
         wallBlock(blockModels, wall, wallPost, wallSide, wallSideTall, wallInventory);
         verticalSlabBlock(blockModels, vSlab, vSlabModel, brickModel);
 
-        // The block-tint registration in BuildersZenith.java only colors the
-        // in-world block. Item icons use a separate, data-driven tint system —
-        // without this, every dyed brick item renders with its raw (white)
-        // texture even though the placed block is tinted correctly.
-        // tintindex 0 = brick color, tintindex 1 = mortar color, matching the
-        // order used in RegisterColorHandlersEvent.BlockTintSources.
         applyDyedItemTint(itemModels, type, brick.asItem(), brickModel);
         applyDyedItemTint(itemModels, type, slab.asItem(), slabBottom);
         applyDyedItemTint(itemModels, type, stairs.asItem(), stairsModel);
@@ -244,83 +431,63 @@ public class ModModelProvider extends ModelProvider {
     }
 
     private void slabBlock(BlockModelGenerators blockModels, Block slab, Identifier bottom, Identifier top, Identifier doubleSlab) {
-        PropertyDispatch.C1<net.minecraft.client.data.models.MultiVariant, SlabType> dispatch = PropertyDispatch.initial(SlabBlock.TYPE)
+        PropertyDispatch.C1<MultiVariant, SlabType> dispatch = PropertyDispatch.initial(SlabBlock.TYPE)
                 .select(SlabType.BOTTOM, BlockModelGenerators.plainVariant(bottom))
                 .select(SlabType.TOP, BlockModelGenerators.plainVariant(top))
                 .select(SlabType.DOUBLE, BlockModelGenerators.plainVariant(doubleSlab));
 
-        blockModels.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(slab).with(dispatch)
-        );
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(slab).with(dispatch));
     }
 
     private void stairsBlock(BlockModelGenerators blockModels, Block stairs, Identifier straight, Identifier inner, Identifier outer) {
-        PropertyDispatch.C3<net.minecraft.client.data.models.MultiVariant, Direction, Half, StairsShape> dispatch = PropertyDispatch
+        PropertyDispatch.C3<MultiVariant, Direction, Half, StairsShape> dispatch = PropertyDispatch
                 .initial(StairBlock.FACING, StairBlock.HALF, StairBlock.SHAPE);
 
-        // BOTTOM half - STRAIGHT
+        // BOTTOM half
         dispatch.select(Direction.EAST,  Half.BOTTOM, StairsShape.STRAIGHT,     BlockModelGenerators.plainVariant(straight));
         dispatch.select(Direction.WEST,  Half.BOTTOM, StairsShape.STRAIGHT,     BlockModelGenerators.plainVariant(straight).with(BlockModelGenerators.Y_ROT_180));
         dispatch.select(Direction.SOUTH, Half.BOTTOM, StairsShape.STRAIGHT,     BlockModelGenerators.plainVariant(straight).with(BlockModelGenerators.Y_ROT_90));
         dispatch.select(Direction.NORTH, Half.BOTTOM, StairsShape.STRAIGHT,     BlockModelGenerators.plainVariant(straight).with(BlockModelGenerators.Y_ROT_270));
-
-        // BOTTOM half - OUTER_RIGHT
         dispatch.select(Direction.EAST,  Half.BOTTOM, StairsShape.OUTER_RIGHT,  BlockModelGenerators.plainVariant(outer));
         dispatch.select(Direction.WEST,  Half.BOTTOM, StairsShape.OUTER_RIGHT,  BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.Y_ROT_180));
         dispatch.select(Direction.SOUTH, Half.BOTTOM, StairsShape.OUTER_RIGHT,  BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.Y_ROT_90));
         dispatch.select(Direction.NORTH, Half.BOTTOM, StairsShape.OUTER_RIGHT,  BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.Y_ROT_270));
-
-        // BOTTOM half - OUTER_LEFT
         dispatch.select(Direction.EAST,  Half.BOTTOM, StairsShape.OUTER_LEFT,   BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.Y_ROT_270));
         dispatch.select(Direction.WEST,  Half.BOTTOM, StairsShape.OUTER_LEFT,   BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.Y_ROT_90));
         dispatch.select(Direction.SOUTH, Half.BOTTOM, StairsShape.OUTER_LEFT,   BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.Y_ROT_180));
         dispatch.select(Direction.NORTH, Half.BOTTOM, StairsShape.OUTER_LEFT,   BlockModelGenerators.plainVariant(outer));
-
-        // BOTTOM half - INNER_RIGHT
         dispatch.select(Direction.EAST,  Half.BOTTOM, StairsShape.INNER_RIGHT,  BlockModelGenerators.plainVariant(inner));
         dispatch.select(Direction.WEST,  Half.BOTTOM, StairsShape.INNER_RIGHT,  BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.Y_ROT_180));
         dispatch.select(Direction.SOUTH, Half.BOTTOM, StairsShape.INNER_RIGHT,  BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.Y_ROT_90));
         dispatch.select(Direction.NORTH, Half.BOTTOM, StairsShape.INNER_RIGHT,  BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.Y_ROT_270));
-
-        // BOTTOM half - INNER_LEFT
         dispatch.select(Direction.EAST,  Half.BOTTOM, StairsShape.INNER_LEFT,   BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.Y_ROT_270));
         dispatch.select(Direction.WEST,  Half.BOTTOM, StairsShape.INNER_LEFT,   BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.Y_ROT_90));
         dispatch.select(Direction.SOUTH, Half.BOTTOM, StairsShape.INNER_LEFT,   BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.Y_ROT_180));
         dispatch.select(Direction.NORTH, Half.BOTTOM, StairsShape.INNER_LEFT,   BlockModelGenerators.plainVariant(inner));
 
-        // TOP half - STRAIGHT
+        // TOP half
         dispatch.select(Direction.EAST,  Half.TOP, StairsShape.STRAIGHT,     BlockModelGenerators.plainVariant(straight).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_90));
         dispatch.select(Direction.WEST,  Half.TOP, StairsShape.STRAIGHT,     BlockModelGenerators.plainVariant(straight).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_270));
         dispatch.select(Direction.SOUTH, Half.TOP, StairsShape.STRAIGHT,     BlockModelGenerators.plainVariant(straight).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_180));
         dispatch.select(Direction.NORTH, Half.TOP, StairsShape.STRAIGHT,     BlockModelGenerators.plainVariant(straight).with(BlockModelGenerators.X_ROT_180));
-
-        // TOP half - OUTER_RIGHT
         dispatch.select(Direction.EAST,  Half.TOP, StairsShape.OUTER_RIGHT,  BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_90));
         dispatch.select(Direction.WEST,  Half.TOP, StairsShape.OUTER_RIGHT,  BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_270));
         dispatch.select(Direction.SOUTH, Half.TOP, StairsShape.OUTER_RIGHT,  BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_180));
         dispatch.select(Direction.NORTH, Half.TOP, StairsShape.OUTER_RIGHT,  BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.X_ROT_180));
-
-        // TOP half - OUTER_LEFT
         dispatch.select(Direction.EAST,  Half.TOP, StairsShape.OUTER_LEFT,   BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.X_ROT_180));
         dispatch.select(Direction.WEST,  Half.TOP, StairsShape.OUTER_LEFT,   BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_180));
         dispatch.select(Direction.SOUTH, Half.TOP, StairsShape.OUTER_LEFT,   BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_90));
         dispatch.select(Direction.NORTH, Half.TOP, StairsShape.OUTER_LEFT,   BlockModelGenerators.plainVariant(outer).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_270));
-
-        // TOP half - INNER_RIGHT
         dispatch.select(Direction.EAST,  Half.TOP, StairsShape.INNER_RIGHT,  BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_90));
         dispatch.select(Direction.WEST,  Half.TOP, StairsShape.INNER_RIGHT,  BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_270));
         dispatch.select(Direction.SOUTH, Half.TOP, StairsShape.INNER_RIGHT,  BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_180));
         dispatch.select(Direction.NORTH, Half.TOP, StairsShape.INNER_RIGHT,  BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.X_ROT_180));
-
-        // TOP half - INNER_LEFT
         dispatch.select(Direction.EAST,  Half.TOP, StairsShape.INNER_LEFT,   BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.X_ROT_180));
         dispatch.select(Direction.WEST,  Half.TOP, StairsShape.INNER_LEFT,   BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_180));
         dispatch.select(Direction.SOUTH, Half.TOP, StairsShape.INNER_LEFT,   BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_90));
         dispatch.select(Direction.NORTH, Half.TOP, StairsShape.INNER_LEFT,   BlockModelGenerators.plainVariant(inner).with(BlockModelGenerators.X_ROT_180).with(BlockModelGenerators.Y_ROT_270));
 
-        blockModels.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(stairs).with(dispatch)
-        );
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(stairs).with(dispatch));
     }
 
     private void wallBlock(BlockModelGenerators blockModels, Block wall,
@@ -341,15 +508,13 @@ public class ModModelProvider extends ModelProvider {
 
     private void horizontalFacingBlock(BlockModelGenerators blockModels, Block block, Identifier model) {
         PropertyDispatch.C1<MultiVariant, Direction> dispatch =
-                PropertyDispatch.initial(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING)
+                PropertyDispatch.initial(BlockStateProperties.HORIZONTAL_FACING)
                         .select(Direction.NORTH, BlockModelGenerators.plainVariant(model))
                         .select(Direction.EAST,  BlockModelGenerators.plainVariant(model).with(BlockModelGenerators.Y_ROT_90))
                         .select(Direction.SOUTH, BlockModelGenerators.plainVariant(model).with(BlockModelGenerators.Y_ROT_180))
                         .select(Direction.WEST,  BlockModelGenerators.plainVariant(model).with(BlockModelGenerators.Y_ROT_270));
 
-        blockModels.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(block).with(dispatch)
-        );
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block).with(dispatch));
         blockModels.registerSimpleItemModel(block, model);
     }
 
@@ -368,7 +533,6 @@ public class ModModelProvider extends ModelProvider {
     // ========================================================================
     // Helpers
     // ========================================================================
-
 
     private Identifier mcLoc(String path) {
         return Identifier.fromNamespaceAndPath("minecraft", path);

@@ -129,6 +129,37 @@ public class lang extends LanguageProvider {
             add(wallId, "Dyed Brick Wall");
         }
 
+        String[] marbleColors = {
+                "white", "light_gray", "gray", "black", "brown", "red", "orange",
+                "yellow", "lime", "green", "cyan", "light_blue", "blue",
+                "purple", "magenta", "pink"
+        };
+
+        for (String c : marbleColors) {
+            // white → no prefix; everything else keeps its color prefix
+            boolean white = c.equals("white");
+
+            String key    = white ? "" : c + "_";
+            String prefix = white ? "Marble" : switch (c) {
+                case "light_gray" -> "Light Gray Marble";
+                case "light_blue" -> "Light Blue Marble";
+                default -> Character.toUpperCase(c.charAt(0)) + c.substring(1) + " Marble";
+            };
+
+            add("block.builders_zenith." + key + "marble",              prefix);
+            add("block.builders_zenith." + key + "marble_bricks",       prefix + " Bricks");
+            add("block.builders_zenith." + key + "marble_chiseled",     "Chiseled " + prefix);
+            add("block.builders_zenith." + key + "marble_tiles",        prefix + " Tiles");
+            add("block.builders_zenith." + key + "polished_marble",     "Polished " + prefix);
+
+            add("block.builders_zenith." + key + "marble_brick_stairs", prefix + " Brick Stairs");
+            add("block.builders_zenith." + key + "marble_tile_stairs",  prefix + " Tile Stairs");
+            add("block.builders_zenith." + key + "marble_brick_slabs",  prefix + " Brick Slab");
+            add("block.builders_zenith." + key + "marble_tile_slabs",   prefix + " Tile Slab");
+            add("block.builders_zenith." + key + "marble_brick_wall",   prefix + " Brick Wall");
+            add("block.builders_zenith." + key + "marble_tile_wall",    prefix + " Tile Wall");
+        }
+
 
         add("block.builders_zenith.oak_winged_table", "Oak Winged Table");
 
