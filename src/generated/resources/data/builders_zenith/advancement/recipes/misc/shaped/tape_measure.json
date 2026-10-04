@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "builders_zenith:shaped/tape_measure"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wool_carpet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:wool_carpets"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_wool_carpet"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "builders_zenith:shaped/tape_measure"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "builders_zenith:block/marble_tiles",
+    "side": "builders_zenith:block/marble_tiles",
+    "top": "builders_zenith:block/marble_tiles"
+  }
+}

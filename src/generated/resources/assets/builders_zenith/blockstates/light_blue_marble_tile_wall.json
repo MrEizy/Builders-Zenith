@@ -1,0 +1,82 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "builders_zenith:block/light_blue_marble_tile_wall_post"
+      },
+      "when": {
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "builders_zenith:block/light_blue_marble_tile_wall_side",
+        "y": 270
+      },
+      "when": {
+        "north": "low"
+      }
+    },
+    {
+      "apply": {
+        "model": "builders_zenith:block/light_blue_marble_tile_wall_side_tall",
+        "y": 270
+      },
+      "when": {
+        "north": "tall"
+      }
+    },
+    {
+      "apply": {
+        "model": "builders_zenith:block/light_blue_marble_tile_wall_side"
+      },
+      "when": {
+        "east": "low"
+      }
+    },
+    {
+      "apply": {
+        "model": "builders_zenith:block/light_blue_marble_tile_wall_side_tall"
+      },
+      "when": {
+        "east": "tall"
+      }
+    },
+    {
+      "apply": {
+        "model": "builders_zenith:block/light_blue_marble_tile_wall_side",
+        "y": 90
+      },
+      "when": {
+        "south": "low"
+      }
+    },
+    {
+      "apply": {
+        "model": "builders_zenith:block/light_blue_marble_tile_wall_side_tall",
+        "y": 90
+      },
+      "when": {
+        "south": "tall"
+      }
+    },
+    {
+      "apply": {
+        "model": "builders_zenith:block/light_blue_marble_tile_wall_side",
+        "y": 180
+      },
+      "when": {
+        "west": "low"
+      }
+    },
+    {
+      "apply": {
+        "model": "builders_zenith:block/light_blue_marble_tile_wall_side_tall",
+        "y": 180
+      },
+      "when": {
+        "west": "tall"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "builders_zenith:block/template_dyed_brick_stairs",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -3715395
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -816214
+      }
+    ]
+  }
+}

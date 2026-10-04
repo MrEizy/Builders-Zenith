@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "builders_zenith:block/template_dyed_brick_wall_inventory",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -14869215
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -3715395
+      }
+    ]
+  }
+}

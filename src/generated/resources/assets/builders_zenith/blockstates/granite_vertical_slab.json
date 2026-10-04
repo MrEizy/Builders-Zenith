@@ -1,0 +1,51 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "minecraft:block/granite"
+      },
+      "when": {
+        "double": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "builders_zenith:block/granite_vertical_slab"
+      },
+      "when": {
+        "double": "false",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "builders_zenith:block/granite_vertical_slab",
+        "y": 90
+      },
+      "when": {
+        "double": "false",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "builders_zenith:block/granite_vertical_slab",
+        "y": 180
+      },
+      "when": {
+        "double": "false",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "builders_zenith:block/granite_vertical_slab",
+        "y": 270
+      },
+      "when": {
+        "double": "false",
+        "facing": "west"
+      }
+    }
+  ]
+}

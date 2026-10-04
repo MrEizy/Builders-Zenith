@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "W": "#minecraft:wool_carpets"
+  },
+  "pattern": [
+    "   ",
+    "II ",
+    "IIW"
+  ],
+  "result": {
+    "id": "builders_zenith:tape_measure"
+  }
+}

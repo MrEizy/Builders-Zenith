@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "builders_zenith:block/gray_polished_marble"
+  }
+}

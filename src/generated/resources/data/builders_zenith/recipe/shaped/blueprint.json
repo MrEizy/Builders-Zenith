@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:blue_dye",
+    "P": "minecraft:paper",
+    "S": "minecraft:string"
+  },
+  "pattern": [
+    "PBP",
+    "BSB",
+    "PBP"
+  ],
+  "result": {
+    "id": "builders_zenith:blueprint"
+  }
+}
