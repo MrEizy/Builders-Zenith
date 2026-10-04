@@ -38,7 +38,7 @@ public class ModTags {
 
     public static class Blocks {
         //public static final TagKey<Block> DESTRUCTIBLE_BLOCKS = createTag("blocks_destruction");
-        //public static final TagKey<Block> STORAGE_BLOCKS_BLACK_IRON = createCommonTag("storage_blocks/black_iron");
+        //public static final TagKey<Block> STORAGE_BLOCKS_BLACK_IRON = createCommonTag("storage_blocks/black_iron");s
 
         public static final TagKey<Block> DYED_BRICK_BLOCKS = createTag("dyed_brick_blocks");
         public static final TagKey<Block> DYED_BRICK_SLABS = createTag("dyed_brick_slabs");
